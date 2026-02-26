@@ -1,0 +1,16 @@
+# /etc/systemd/system/gns3.service
+[Unit]
+Description=GNS3 server
+After=network.target
+
+[Service]
+Type=simple
+User=novy
+Group=novy
+# Use the full path found via 'which gns3server'
+ExecStart=/home/novy/.local/bin/gns3server
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
