@@ -24,4 +24,4 @@ QEMU Windows virtuális gépek optimális működéséhez:
 | -vga qxl            | Kijelző                          | SPICE kompatibilis, gyors felbontás váltást lehetővé tevő videókártya.                                                                            |
 
 
-Linux esetén kicsit kevesebb kapcsolóra van szükségünk, mert a virtuális eszközöket látva a kernel automatikusan KVM kompatibilis drivereket tölt be: -cpu host -machine type=q35,accel=kvm
+Linux esetén kicsit kevesebb kapcsolóra van szükségünk, mert a virtuális eszközöket látva a kernel automatikusan KVM kompatibilis drivereket tölt be: `-cpu host -machine type=q35,accel=kvm`
