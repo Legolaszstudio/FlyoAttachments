@@ -1,0 +1,31 @@
+# /usr/local/etc/rc.d/tailscale_watchdog
+#!/bin/sh
+
+# PROVIDE: tailscale_watchdog
+# REQUIRE: LOGIN tailscaled
+# KEYWORD: shutdown
+
+. /etc/rc.subr
+
+name="tailscale_watchdog"
+rcvar="tailscale_watchdog_enable"
+start_precmd="tailscale_watchdog_prestart"
+
+tailscale_watchdog_prestart()
+{
+    rm -f /var/run/tailscale_watchdog.pid
+    return 0
+}
+
+# We use the built-in 'daemon' tool to supervise the script
+command="/usr/sbin/daemon"
+procname="/bin/sh"
+pidfile="/var/run/${name}.pid"
+
+# -f: Run in background
+# -p: Create the PID file (crucial for 'service status' to work)
+# -r: Restart the script automatically if it crashes (Supervisor mode)
+command_args="-f -r -p ${pidfile} /conf/tailscale_watchdog.sh"
+
+load_rc_config $name
+run_rc_command "$1"
