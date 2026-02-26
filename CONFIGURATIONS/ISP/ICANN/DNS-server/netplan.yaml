@@ -1,0 +1,63 @@
+# /etc/netplan/50-cloud-init.yaml
+network:
+  version: 2
+  ethernets:
+    ens4:
+      addresses:
+        - "172.29.29.30/30"
+        - "2001:470:216f:1CA4:29:29::30/127"
+        - "172:29:29::30/127":
+            lifetime: 0
+      
+      routes:
+        # IPv4 default route for 'main' table (for apt, etc.)
+        - to: default
+          via: "172.29.29.29"
+        # IPv6 (2001:) default route for 'main' table
+        - to: "::/0"
+          via: "2001:470:216f:1CA4:29:29::31"
+
+        # IPv6 (172:) route for ens4 (must use policy table)
+        - to: "::/0"
+          via: "172:29:29::31"
+          table: 108
+          
+      routing-policy:
+        # Rule for IPv4 source
+        - from: "172.29.29.30/32"
+          table: 104
+        # Rule for 2001: source
+        - from: "2001:470:216f:1CA4:29:29::30/128"
+          table: 106
+        # Rule for 172: source
+        - from: "172:29:29::30/128"
+          table: 108
+
+    ens5:
+      addresses:
+        - "172.30.30.30/30"
+        - "2001:470:2171:1CA4:30:30::30/127"
+        - "172:30:30::30/127":
+            lifetime: 0
+
+      routes:
+        # IPv4 route for ens5
+        - to: default
+          via: "172.30.30.29"
+          table: 105
+        # IPv6 (2001:) route for ens5
+        - to: "::/0"
+          via: "2001:470:2171:1CA4:30:30::31"
+          table: 107
+        # IPv6 (172:) route for ens5
+        - to: "::/0"
+          via: "172:30:30::31"
+          table: 109
+          
+      routing-policy:
+        - from: "172.30.30.30/32"
+          table: 105
+        - from: "2001:470:2171:1CA4:30:30::30/128"
+          table: 107
+        - from: "172:30:30::30/128"
+          table: 109

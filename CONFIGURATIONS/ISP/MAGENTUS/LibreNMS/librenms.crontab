@@ -1,0 +1,13 @@
+# sudo crontab -u librenms -e
+# m h  dom mon dow   command
+33   */6  * * * /opt/librenms/cronic /opt/librenms/discovery-wrapper.py 1
+*/5  *    * * * /opt/librenms/discovery.php -h new >> /dev/null 2>&1
+
+*/5  *    * * * /opt/librenms/cronic /opt/librenms/poller-wrapper.py 16
+*    *    * * * /opt/librenms/alerts.php >> /dev/null 2>&1
+
+*/5  *    * * * /opt/librenms/poll-billing.php >> /dev/null 2>&1
+01   *    * * * /opt/librenms/billing-calculate.php >> /dev/null 2>&1
+*/5  *    * * * /opt/librenms/check-services.php >> /dev/null 2>&1
+
+19   0    * * * /opt/librenms/daily.sh >> /dev/null 2>&1

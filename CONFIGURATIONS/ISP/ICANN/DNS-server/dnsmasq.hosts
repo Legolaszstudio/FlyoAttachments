@@ -1,0 +1,9 @@
+# /etc/dnsmasq.hosts 
+172.16.254.3 flyo.com
+172.17.254.3 flyo.com
+172.16.255.3 librenms.magentus.com
+172.17.255.3 graylog.yapper.com
+172.16.254.3 vpn.flyo.com
+172.17.254.3 vpn.flyo.com
+172.16.254.3 hsadmin.flyo.com
+172.17.254.3 hsadmin.flyo.com

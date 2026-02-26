@@ -1,0 +1,1 @@
+icann ALL=(ALL) NOPASSWD: /usr/bin/pkill -HUP dnsmasq
