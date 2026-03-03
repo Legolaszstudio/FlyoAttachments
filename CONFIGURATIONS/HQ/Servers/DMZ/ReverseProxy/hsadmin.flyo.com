@@ -1,3 +1,4 @@
+# /etc/nginx/sites-available/hsadmin.flyo.com
 upstream flyo_hsadmin_upstream {
     zone flyo_hsadmin 1024K;
     server 10.0.254.10:81 max_fails=3 fail_timeout=10s;

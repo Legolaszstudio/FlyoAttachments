@@ -1,3 +1,4 @@
+# /etc/nginx/sites-available/flyo.com
 server {
         listen 80;
         listen [::]:80;

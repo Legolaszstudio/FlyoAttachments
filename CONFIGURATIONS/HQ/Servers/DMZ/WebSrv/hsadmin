@@ -1,3 +1,4 @@
+# /etc/nginx/sites-available/hsadmin
 server {
         listen 81;
         listen [::]:81;

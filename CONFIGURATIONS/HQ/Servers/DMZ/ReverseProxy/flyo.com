@@ -1,3 +1,4 @@
+# /etc/nginx/sites-available/flyo.com
 upstream flyo_upstream {
     zone flyo 1024K;
     server 10.0.254.10:80 max_fails=3 fail_timeout=10s;

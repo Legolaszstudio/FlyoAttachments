@@ -1,3 +1,4 @@
+# /etc/nginx/sites-available/vpn.flyo.com
 upstream flyo_headscale_upstream {
     zone flyo_vpn 1024K;
     server 10.0.254.20:8080 max_fails=3 fail_timeout=10s;
