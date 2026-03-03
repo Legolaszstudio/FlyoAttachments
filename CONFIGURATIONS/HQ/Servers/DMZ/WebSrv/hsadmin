@@ -1,0 +1,13 @@
+server {
+        listen 81;
+        listen [::]:81;
+
+        root /var/www/hsadmin.flyo.com/;
+        index index.html;
+
+        server_name hsadmin.flyo.com;
+
+        location / {
+                try_files $uri $uri/ =404;
+        }
+}
