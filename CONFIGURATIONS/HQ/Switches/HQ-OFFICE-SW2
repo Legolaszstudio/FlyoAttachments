@@ -1,5 +1,4 @@
-! Command: show running-config
-! device: HQ-OFFICE-SW2 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
+! device: HQ-OFFICE-SW2 (cEOSLab, EOS-4.35.3F-46782207.4353F (engineering build))
 !
 no aaa root
 !
@@ -111,8 +110,6 @@ interface Ethernet1
    description UNUSED-PORT
    shutdown
    switchport access vlan 999
-   switchport trunk native vlan 111
-   switchport trunk allowed vlan 1-4093
 !
 interface Ethernet2
    description Connection to HQ-OPERATIONS
@@ -173,6 +170,10 @@ interface Ethernet12
    shutdown
    switchport access vlan 999
 !
+interface Management0
+   description Keepalive Link
+   ip address 10.0.95.6/30
+!
 interface Vlan10
    ip address 10.0.1.7/24
 !
@@ -198,7 +199,7 @@ interface Vlan60
    ip virtual-router address 10.0.6.1
 !
 interface Vlan4094
-   ip address 10.0.94.2/30
+   ip address 10.0.94.6/30
 !
 ip virtual-router mac-address 00:1c:73:00:00:99
 !
@@ -207,20 +208,16 @@ ip routing
 mlag configuration
    domain-id OFFICE-MLAG
    local-interface Vlan4094
-   peer-address 10.0.94.1
+   peer-address 10.0.94.5
+   peer-address heartbeat 10.0.95.5
    peer-link Port-Channel1
+   dual-primary detection delay 10 action errdisable all-interfaces
+   reload-delay mlag 300
 !
 ip route 0.0.0.0/0 10.0.3.1
 !
 ntp local-interface Vlan10
 ntp server 10.0.1.1
-!
-router multicast
-   ipv4
-      software-forwarding kernel
-   !
-   ipv6
-      software-forwarding kernel
 !
 router ospf 1
    router-id 10.0.3.5

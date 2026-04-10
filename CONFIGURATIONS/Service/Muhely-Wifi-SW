@@ -1,0 +1,176 @@
+Building configuration...
+
+Current configuration : 3983 bytes
+!
+! Last configuration change at 19:58:38 UTC Fri Apr 10 2026
+!
+version 17.15
+service timestamps debug datetime msec
+service timestamps log datetime msec
+!
+hostname Muhely-Wifi-SW
+!
+boot-start-marker
+boot-end-marker
+!
+!
+logging discriminator EXCESS severity drops 6 msg-body drops EXCESSCOLL 
+logging buffered 50000
+logging console discriminator EXCESS
+no aaa new-model
+!
+!
+!
+no ip icmp rate-limit unreachable
+!         
+!
+!
+!
+!
+!
+!
+!
+!
+!
+ip audit notify log
+ip audit po max-events 100
+no ip domain lookup
+no ip cef
+login on-success log
+no ipv6 cef
+!
+!
+!
+!
+!
+!
+!
+!         
+crypto pki trustpoint TP-self-signed-2048015
+ enrollment selfsigned
+ subject-name cn=IOS-Self-Signed-Certificate-2048015
+ revocation-check none
+ rsakeypair TP-self-signed-2048015
+ hash sha512
+!
+!
+crypto pki certificate chain TP-self-signed-2048015
+ certificate self-signed 01
+  3082032A 30820212 A0030201 02020101 300D0609 2A864886 F70D0101 0D050030 
+  2E312C30 2A060355 04030C23 494F532D 53656C66 2D536967 6E65642D 43657274 
+  69666963 6174652D 32303438 30313530 1E170D32 36303431 30313935 3835395A 
+  170D3336 30343039 31393538 35395A30 2E312C30 2A060355 04030C23 494F532D 
+  53656C66 2D536967 6E65642D 43657274 69666963 6174652D 32303438 30313530 
+  82012230 0D06092A 864886F7 0D010101 05000382 010F0030 82010A02 82010100 
+  AAD88C9B D19D9E94 5378C814 50FA71DF 1DF4AB9C AF224D13 3EAD6239 2ED60BB1 
+  A82BAF01 ED7D51AA 7AC60ED3 F9812E2C FB482E94 C5063688 4625B34A 59A805A7 
+  464AF39A 31CA7137 FC5360F3 7244156D ED3E36B4 E4F72178 746F1466 6CEC6351 
+  94836B0D 8AEBADC4 C8B0EE61 CC41B997 D33648D7 58C62885 D0523A59 D21747C2 
+  80B8630B CBA9426F 11292538 BADD4BB5 7AD86AA0 7D4E4C7B D46037D6 CCF540B3 
+  49F32BA0 15EBF155 E9AEAD51 F8B87019 35C3354F 0B2F99BA 13CDABA2 0E0947AE 
+  0D8F0854 5BED7497 40BE1230 02591F7B ADAB4F69 00FB5864 3F8FF5CB 647A53C6 
+  9B5CFF3D 7B3AFB90 3709F26A B5BA7334 5302D6B4 CAC00F4B B8CE75CF DC13089F 
+  02030100 01A35330 51301D06 03551D0E 04160414 012AD9D8 5D046351 372FD45A 
+  96EE8199 F6BF7137 301F0603 551D2304 18301680 14012AD9 D85D0463 51372FD4 
+  5A96EE81 99F6BF71 37300F06 03551D13 0101FF04 05300301 01FF300D 06092A86 
+  4886F70D 01010D05 00038201 01005FD2 615B7AEB B3A26CA1 161C75A5 F87606A5 
+  FD942B61 5F1DD504 F2E0E6A4 FAAA7F66 4919BD05 09A89B33 8B1979C8 37364BF4 
+  14E84164 C1424DE0 0ADB4F43 F0A7BDBD D413891A 8113F211 1E4AAC84 E730DD56 
+  4F5FEBB2 C48CBF1B 237F9824 038D7EB8 6DC8E4DE DEAED50F 6CC0957F DD97EA73 
+  1C72F540 62249ACD 42F06F71 0CBADA3B 7A5A0053 12AF4002 1461E442 7A743124 
+  17B865E8 82E1EB90 26B22839 38B30F92 1BCA7D6B A89B6FCF A4CEC303 F20D51AF 
+  E7E56EFD 4C6BEDBF E68750FE DEE1D551 7786693E 266C8018 C65A30C3 5A36452E 
+  5B8FF340 D38108FB BEE50330 050FE487 2A6B9DE3 1C89C1BE 9AF01373 7E616B30 
+  C046705A C3441513 BBCBAB69 0EB6
+  	quit
+!
+!
+memory free low-watermark processor 53379
+!
+!
+spanning-tree mode rapid-pvst
+spanning-tree extend system-id
+!
+!         
+vlan internal allocation policy ascending
+!
+!
+!
+!
+!
+interface Ethernet0/0
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/1
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 99
+ switchport mode trunk
+!
+interface Ethernet0/2
+ switchport access vlan 99
+ switchport trunk encapsulation dot1q
+ switchport mode trunk
+!
+interface Ethernet0/3
+!
+interface Ethernet1/0
+!
+interface Ethernet1/1
+!
+interface Ethernet1/2
+!
+interface Ethernet1/3
+!
+interface Ethernet2/0
+!
+interface Ethernet2/1
+!
+interface Ethernet2/2
+!
+interface Ethernet2/3
+!
+interface Ethernet3/0
+!
+interface Ethernet3/1
+!
+interface Ethernet3/2
+!
+interface Ethernet3/3
+ switchport access vlan 99
+ switchport mode access
+!
+interface Vlan1
+ no ip address
+ shutdown
+!
+ip forward-protocol nd
+!
+!
+ip tcp synwait-time 5
+ip http server
+ip http secure-server
+ip ssh bulk-mode 131072
+!
+no logging btrace
+!
+!
+!
+control-plane
+!
+!
+!
+line con 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line aux 0
+ exec-timeout 0 0
+ privilege level 15
+ logging synchronous
+line vty 0 4
+ login
+ transport input ssh
+!
+!
+end

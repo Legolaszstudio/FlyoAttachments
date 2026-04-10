@@ -1,9 +1,8 @@
-! Command: show running-config
-! device: HQ-OPERATIONS-SW2 (cEOSLab, EOS-4.35.0F-44178984.4350F (engineering build))
+! device: HQ-OPERATIONS-SW1 (cEOSLab, EOS-4.35.3F-46782207.4353F (engineering build))
 !
 no aaa root
 !
-username hq-admin privilege 15 role network-admin secret sha512 $6$VPfsbwu6Q5RkyveY$Z5xMTP0mfk73FJwty2m04CfzhhJ633hAPZos4ua6/NckrUnFmNBGkDRUriZ431adlwa7k4.h3b.utu2BEB0rx/
+username hq-admin privilege 15 role network-admin secret sha512 $6$zw5.nD.tYJ5xW15s$9ucRtkH8739dQSDxrUud9SSa/ASw5p.3cLdzRm6TMCkw1lCN1yqD7u5OY.Z/N4se5yqqxnuUp2AKrmRXNox1/1
 !
 no service interface inactive port-id allocation disabled
 !
@@ -18,7 +17,7 @@ agent PowerFuse shutdown
 agent StandbyCpld shutdown
 agent LicenseManager shutdown
 !
-hostname HQ-OPERATIONS-SW2
+hostname HQ-OPERATIONS-SW1
 dns domain flyo.local
 !
 spanning-tree mode rapid-pvst
@@ -28,6 +27,8 @@ spanning-tree edge-port bpduguard default
 system l1
    unsupported speed action error
    unsupported error-correction action error
+!
+clock timezone Europe/Budapest
 !
 vlan 10
    name Management
@@ -72,17 +73,16 @@ interface Ethernet1
    switchport access vlan 999
 !
 interface Ethernet2
-   description Uplink to HQ-OFFICE-SW2
-   channel-group 20 mode active
-!
-interface Ethernet3
    description Uplink to HQ-OFFICE-SW1
    channel-group 10 mode active
+!
+interface Ethernet3
+   description Uplink to HQ-OFFICE-SW2
+   channel-group 20 mode active
 !
 interface Ethernet4
    description Link to HQ-OPERATIONS-PC
    switchport access vlan 40
-   address locking ipv4
    spanning-tree portfast edge
 !
 interface Ethernet5
@@ -123,29 +123,31 @@ interface Ethernet12
    description MLAG PEER-LINK
    channel-group 1 mode active
 !
+interface Management0
+   description Keepalive Link
+   ip address 10.0.95.9/30
+!
+interface Management1
+!
 interface Vlan10
    no autostate
-   ip address 10.0.1.42/24
+   ip address 10.0.1.41/24
 !
 interface Vlan4094
-   ip address 10.0.96.2/30
+   ip address 10.0.94.9/30
 !
-no ip routing
+ip routing
 !
 mlag configuration
    domain-id OPS-MLAG
    local-interface Vlan4094
-   peer-address 10.0.96.1
+   peer-address 10.0.94.10
+   peer-address heartbeat 10.0.95.10
    peer-link Port-Channel1
+   dual-primary detection delay 10 action errdisable all-interfaces
+   reload-delay mlag 300
 !
 ntp local-interface Vlan10
-ntp server 10.0.1.1
-!
-router multicast
-   ipv4
-      software-forwarding kernel
-   !
-   ipv6
-      software-forwarding kernel
+ntp server 10.0.1.1 prefer
 !
 end

@@ -383,12 +383,12 @@
         <any>1</any>
       </source>
       <destination>
-        <any>1</any>
+        <address>10.0.0.100</address>
         <port>53</port>
       </destination>
       <updated>
         <username>root@10.0.1.20</username>
-        <time>1774858949.57</time>
+        <time>1774865087.26</time>
         <description>/firewall_rules_edit.php made changes</description>
       </updated>
       <created>
@@ -567,14 +567,14 @@
       <direction>in</direction>
       <quick>1</quick>
       <source>
-        <any>1</any>
+        <network>opt1</network>
       </source>
       <destination>
         <any>1</any>
       </destination>
       <updated>
         <username>root@10.0.1.20</username>
-        <time>1774468217.56</time>
+        <time>1774862117.91</time>
         <description>/firewall_rules_edit.php made changes</description>
       </updated>
       <created>
@@ -713,12 +713,12 @@
       </created>
       <log>1</log>
     </rule>
-    <rule uuid="a246781b-73b8-4c1f-b4e2-48809fdd2c62">
+    <rule uuid="98f2a475-23f1-40b1-9025-0556b669d72f">
       <type>pass</type>
-      <interface>opt5</interface>
+      <interface>opt6</interface>
       <ipprotocol>inet</ipprotocol>
       <statetype>keep state</statetype>
-      <descr>Enable NETBIOS Name Service</descr>
+      <descr>Allow DHCP</descr>
       <direction>in</direction>
       <quick>1</quick>
       <protocol>udp</protocol>
@@ -727,16 +727,16 @@
       </source>
       <destination>
         <any>1</any>
-        <port>137</port>
+        <port>67</port>
       </destination>
       <updated>
         <username>root@10.0.1.20</username>
-        <time>1774606355.92</time>
+        <time>1774875187.39</time>
         <description>/firewall_rules_edit.php made changes</description>
       </updated>
       <created>
         <username>root@10.0.1.20</username>
-        <time>1774606355.92</time>
+        <time>1774875187.39</time>
         <description>/firewall_rules_edit.php made changes</description>
       </created>
     </rule>
@@ -749,7 +749,7 @@
       <direction>in</direction>
       <quick>1</quick>
       <source>
-        <any>1</any>
+        <network>opt6</network>
       </source>
       <destination>
         <address>FlyoNetwork</address>
@@ -757,7 +757,7 @@
       </destination>
       <updated>
         <username>root@10.0.1.20</username>
-        <time>1773999347.79</time>
+        <time>1774871954.28</time>
         <description>/firewall_rules_edit.php made changes</description>
       </updated>
       <created>
@@ -838,30 +838,29 @@
         <time>1768312161.31</time>
         <description>/firewall_rules_edit.php made changes</description>
       </created>
+      <disabled>1</disabled>
     </rule>
-    <rule uuid="78482594-ff62-4d47-be34-aae242ecdc82">
+    <rule uuid="a91f87a3-64fd-4e71-b4a5-245adfd11efc">
       <type>pass</type>
       <interface>opt10</interface>
-      <ipprotocol>inet46</ipprotocol>
-      <statetype>sloppy state</statetype>
+      <ipprotocol>inet</ipprotocol>
+      <statetype>keep state</statetype>
       <direction>in</direction>
-      <tcpflags_any>1</tcpflags_any>
       <quick>1</quick>
-      <protocol>tcp</protocol>
       <source>
         <address>TailscaleSubnet</address>
       </source>
       <destination>
-        <any>1</any>
+        <address>Windows_Servers</address>
       </destination>
       <updated>
         <username>root@10.0.1.20</username>
-        <time>1768312225.69</time>
+        <time>1774862875.31</time>
         <description>/firewall_rules_edit.php made changes</description>
       </updated>
       <created>
         <username>root@10.0.1.20</username>
-        <time>1768312183.71</time>
+        <time>1774862855.56</time>
         <description>/firewall_rules_edit.php made changes</description>
       </created>
     </rule>
@@ -969,7 +968,7 @@
   <revision>
     <username>root@10.0.1.20</username>
     <description>/firewall_rules.php made changes</description>
-    <time>1774860411.11</time>
+    <time>1774875223.19</time>
   </revision>
   <OPNsense>
     <captiveportal version="1.0.4" persisted_at="1760514982.52">
@@ -998,7 +997,7 @@
       <Lvtemplate version="0.0.1" persisted_at="1760514982.65">
         <templates/>
       </Lvtemplate>
-      <Alias version="1.0.1" persisted_at="1774858030.69" description="Firewall aliases">
+      <Alias version="1.0.1" persisted_at="1774865057.70" description="Firewall aliases">
         <geoip>
           <url/>
         </geoip>
@@ -1270,6 +1269,43 @@ Operations_net
             <expire/>
             <categories/>
             <description>Ports needed for DMZ servers to communicate with the internet</description>
+          </alias>
+          <alias uuid="85b877d8-2fde-4fb0-8a46-6a2b4d18aecd">
+            <enabled>1</enabled>
+            <name>Windows_Servers</name>
+            <type>host</type>
+            <path_expression/>
+            <proto/>
+            <interface/>
+            <counters>0</counters>
+            <updatefreq/>
+            <content>10.0.0.100
+10.2.5.2
+10.1.1.34</content>
+            <password/>
+            <username/>
+            <authtype/>
+            <expire/>
+            <categories/>
+            <description>All Windows Server IPs</description>
+          </alias>
+          <alias uuid="a9edae87-7f24-4f24-be1f-febdccb9e36d">
+            <enabled>1</enabled>
+            <name>DNS_servers</name>
+            <type>host</type>
+            <path_expression/>
+            <proto/>
+            <interface/>
+            <counters>0</counters>
+            <updatefreq/>
+            <content>172.29.29.30
+172.30.30.30</content>
+            <password/>
+            <username/>
+            <authtype/>
+            <expire/>
+            <categories/>
+            <description/>
           </alias>
         </aliases>
       </Alias>

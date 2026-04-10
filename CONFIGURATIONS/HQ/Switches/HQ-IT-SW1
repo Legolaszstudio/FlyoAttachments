@@ -1,16 +1,12 @@
-*Mar 27 10:30:51.362: %SYS-5-CONFIG_I: Configured from console by console
-HQ-DMZ-SW2#sh run
-Building configuration...
 
-Current configuration : 3303 bytes
 !
-! Last configuration change at 11:30:51 UTC Fri Mar 27 2026
+! Last configuration change at 20:16:26 UTC Fri Apr 10 2026
 !
 version 17.15
 service timestamps debug datetime msec
 service timestamps log datetime msec
 !
-hostname HQ-DMZ-SW2
+hostname HQ-IT-SW1
 !
 boot-start-marker
 boot-end-marker
@@ -35,6 +31,7 @@ no ip icmp rate-limit unreachable
 !
 !
 !
+ip dhcp snooping
 ip audit notify log
 ip audit po max-events 100
 no ip domain lookup
@@ -47,18 +44,18 @@ no ipv6 cef
 !
 !
 !
-!         
 !
 !
-crypto pki trustpoint TP-self-signed-2048007
+!
+crypto pki trustpoint TP-self-signed-2048001
  enrollment selfsigned
- subject-name cn=IOS-Self-Signed-Certificate-2048007
+ subject-name cn=IOS-Self-Signed-Certificate-2048001
  revocation-check none
- rsakeypair TP-self-signed-2048007
+ rsakeypair TP-self-signed-2048001
  hash sha512
 !
 !
-crypto pki certificate chain TP-self-signed-2048007
+crypto pki certificate chain TP-self-signed-2048001
  certificate self-signed 01
   	quit
 !
@@ -70,7 +67,7 @@ spanning-tree mode rapid-pvst
 spanning-tree portfast bpduguard default
 spanning-tree extend system-id
 !
-username hq-admin privilege 15 secret 9 $9$c.wM0IkYAkqwf.$AZ2b2WWDNszRhktjNejgpFkhpiY6AJACccEWFcvY2eU
+username hq-admin privilege 15 secret 9 $9$YuWQy9tXXYfafE$J3o0xDReTITgIFr.QaSX9deVokBkCj0GTVM13Gz.o6o
 !
 vlan internal allocation policy ascending
 !
@@ -78,28 +75,42 @@ vlan internal allocation policy ascending
 !
 !
 !
+interface Port-channel1
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 111
+ switchport mode trunk
+ ip dhcp snooping trust
+!
 interface Ethernet0/0
- description Link to HQ-CORE-R2
- switchport mode access
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 111
+ switchport mode trunk
+ channel-group 1 mode active
+ ip dhcp snooping trust
 !
 interface Ethernet0/1
- description Link to HQ-DMZ-WEB-SRV
- switchport mode access
- spanning-tree portfast
+ switchport trunk encapsulation dot1q
+ switchport trunk native vlan 111
+ switchport mode trunk
+ channel-group 1 mode active
+ ip dhcp snooping trust
 !
 interface Ethernet0/2
- description Link to HQ-DMZ-REVERSE-PROXY
+ description UNUSED-PORT
+ switchport access vlan 999
  switchport mode access
- spanning-tree portfast
+ shutdown
 !
 interface Ethernet0/3
- description Link to HQ-DMZ-HeadScale
+ description UNUSED-PORT
+ switchport access vlan 999
  switchport mode access
- spanning-tree portfast
+ shutdown
 !
 interface Ethernet1/0
- description Link to HQ-DMZ-SW1
+ switchport access vlan 10
  switchport mode access
+ spanning-tree portfast
 !
 interface Ethernet1/1
  description UNUSED-PORT
@@ -171,6 +182,11 @@ interface Vlan1
  no ip address
  shutdown
 !
+interface Vlan10
+ ip address 10.0.1.10 255.255.255.0
+ no autostate
+!
+ip default-gateway 10.0.1.1
 ip forward-protocol nd
 !
 !
@@ -184,7 +200,7 @@ no logging btrace
 !
 !
 control-plane
-!         
+!
 !
 !
 line con 0
@@ -199,5 +215,7 @@ line vty 0 4
  login local
  transport input ssh
 !
+ntp source Vlan10
+ntp server 10.0.1.1
 !
 end

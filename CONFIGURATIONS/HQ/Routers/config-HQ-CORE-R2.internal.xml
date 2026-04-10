@@ -544,12 +544,12 @@
         <any>1</any>
       </source>
       <destination>
-        <any>1</any>
+        <address>10.0.0.100</address>
         <port>53</port>
       </destination>
       <updated>
         <username>root@10.0.1.20</username>
-        <time>1774860299.64</time>
+        <time>1774865136.09</time>
         <description>/firewall_rules_edit.php made changes</description>
       </updated>
       <created>
@@ -924,6 +924,33 @@
       </created>
       <log>1</log>
     </rule>
+    <rule uuid="5c9dee33-e7b0-4b44-b606-0f1de55ef064">
+      <type>pass</type>
+      <interface>opt6</interface>
+      <ipprotocol>inet</ipprotocol>
+      <statetype>keep state</statetype>
+      <descr>Allow DHCP</descr>
+      <direction>in</direction>
+      <quick>1</quick>
+      <protocol>udp</protocol>
+      <source>
+        <any>1</any>
+      </source>
+      <destination>
+        <any>1</any>
+        <port>67</port>
+      </destination>
+      <updated>
+        <username>root@10.0.1.20</username>
+        <time>1774875394.15</time>
+        <description>/firewall_rules_edit.php made changes</description>
+      </updated>
+      <created>
+        <username>root@10.0.1.20</username>
+        <time>1774875394.15</time>
+        <description>/firewall_rules_edit.php made changes</description>
+      </created>
+    </rule>
     <rule uuid="5b9944d0-e2ee-4e5c-ba69-cd48b8b1d14d">
       <type>pass</type>
       <interface>opt6</interface>
@@ -933,7 +960,7 @@
       <direction>in</direction>
       <quick>1</quick>
       <source>
-        <any>1</any>
+        <network>opt6</network>
       </source>
       <destination>
         <address>FlyoNetwork</address>
@@ -941,7 +968,7 @@
       </destination>
       <updated>
         <username>root@10.0.1.20</username>
-        <time>1774000183.09</time>
+        <time>1774871977.83</time>
         <description>/firewall_rules_edit.php made changes</description>
       </updated>
       <created>
@@ -974,6 +1001,7 @@
         <description>/firewall_rules_edit.php made changes</description>
       </created>
       <log>1</log>
+      <disabled>1</disabled>
     </rule>
     <rule uuid="55f57c40-991f-4026-896a-8b33a2db76c9">
       <type>pass</type>
@@ -998,6 +1026,7 @@
         <time>1767622445.29</time>
         <description>/firewall_rules_edit.php made changes</description>
       </created>
+      <disabled>1</disabled>
     </rule>
     <rule uuid="0c6d626e-1999-4259-a3a6-59fcd31f1445">
       <type>pass</type>
@@ -1133,7 +1162,7 @@
   <revision>
     <username>root@10.0.1.20</username>
     <description>/firewall_rules.php made changes</description>
-    <time>1774860497.45</time>
+    <time>1774875411.68</time>
   </revision>
   <OPNsense>
     <captiveportal version="1.0.4" persisted_at="1760514982.52">

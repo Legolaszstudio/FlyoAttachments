@@ -1,15 +1,12 @@
-Building configuration...
 
-Current configuration : 3832 bytes
 !
-! Last configuration change at 11:34:31 UTC Fri Mar 27 2026
-! NVRAM config last updated at 10:53:59 UTC Fri Mar 27 2026
+! Last configuration change at 20:16:31 UTC Fri Apr 10 2026
 !
 version 17.15
 service timestamps debug datetime msec
 service timestamps log datetime msec
 !
-hostname HQ-IT-SW1
+hostname HQ-HR-SW1
 !
 boot-start-marker
 boot-end-marker
@@ -45,20 +42,20 @@ no ipv6 cef
 !
 !
 !
-!         
 !
 !
 !
 !
-crypto pki trustpoint TP-self-signed-2048001
+!
+crypto pki trustpoint TP-self-signed-2048002
  enrollment selfsigned
- subject-name cn=IOS-Self-Signed-Certificate-2048001
+ subject-name cn=IOS-Self-Signed-Certificate-2048002
  revocation-check none
- rsakeypair TP-self-signed-2048001
+ rsakeypair TP-self-signed-2048002
  hash sha512
 !
 !
-crypto pki certificate chain TP-self-signed-2048001
+crypto pki certificate chain TP-self-signed-2048002
  certificate self-signed 01
   	quit
 !
@@ -70,7 +67,7 @@ spanning-tree mode rapid-pvst
 spanning-tree portfast bpduguard default
 spanning-tree extend system-id
 !
-username hq-admin privilege 15 secret 9 $9$YuWQy9tXXYfafE$J3o0xDReTITgIFr.QaSX9deVokBkCj0GTVM13Gz.o6o
+username hq-admin privilege 15 secret 9 $9$BpLzDHGGIhoqm.$fyvrF2.pzp4qp9sB6GqPfLzEmYjEVgNDHRfopXs6XX2
 !
 vlan internal allocation policy ascending
 !
@@ -79,19 +76,22 @@ vlan internal allocation policy ascending
 !
 !
 interface Port-channel1
+ description Uplink to HQ-OFFICE MLAG
  switchport trunk encapsulation dot1q
  switchport trunk native vlan 111
  switchport mode trunk
  ip dhcp snooping trust
 !
 interface Ethernet0/0
+ description Uplink to HQ-OFFICE-SW1
  switchport trunk encapsulation dot1q
  switchport trunk native vlan 111
  switchport mode trunk
  channel-group 1 mode active
  ip dhcp snooping trust
-!         
+!
 interface Ethernet0/1
+ description Uplink to HQ-OFFICE-SW2
  switchport trunk encapsulation dot1q
  switchport trunk native vlan 111
  switchport mode trunk
@@ -111,7 +111,8 @@ interface Ethernet0/3
  shutdown
 !
 interface Ethernet1/0
- switchport access vlan 10
+ description Link to HQ-HR-PC
+ switchport access vlan 60
  switchport mode access
  spanning-tree portfast
 !
@@ -186,7 +187,7 @@ interface Vlan1
  shutdown
 !
 interface Vlan10
- ip address 10.0.1.10 255.255.255.0
+ ip address 10.0.1.60 255.255.255.0
  no autostate
 !
 ip default-gateway 10.0.1.1
@@ -205,7 +206,7 @@ no logging btrace
 control-plane
 !
 !
-!         
+!
 line con 0
  exec-timeout 0 0
  privilege level 15
@@ -219,6 +220,6 @@ line vty 0 4
  transport input ssh
 !
 ntp source Vlan10
-ntp server 10.0.1.1
+ntp server 10.0.1.1 prefer
 !
 end
