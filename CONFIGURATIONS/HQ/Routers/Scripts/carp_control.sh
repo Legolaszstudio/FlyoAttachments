@@ -8,12 +8,12 @@ if [ "$1" = "down" ]; then
     # Check if we are below 240
     if [ "$CURRENT" -lt 240 ]; then
         sysctl net.inet.carp.demotion=$((240-$CURRENT))
-        logger -t $TAG "WAN failure detected. Increased CARP demotion to 240 (S>
+        logger -t $TAG "WAN failure detected. Increased CARP demotion to 240 (Switching to Backup)"
     fi
 elif [ "$1" = "up" ]; then
     # Check if we are demoted before trying to fix it
     if [ "$CURRENT" -gt 0 ]; then
         sysctl net.inet.carp.demotion=-$CURRENT
-        logger -t $TAG "WAN restored. Reset CARP demotion to 0 (Reclaiming Mast>
+        logger -t $TAG "WAN restored. Reset CARP demotion to 0 (Reclaiming Master)"
     fi
 fi
